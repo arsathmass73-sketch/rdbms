@@ -1,0 +1,280 @@
+SQL> create table borrower10(cname varchar2(20),lno number(10));
+
+Table created.
+SQL> insert into borrower10 values('&cname','&lno');
+Enter value for cname: ragu
+Enter value for lno: 1001
+old   1: insert into borrower10 values('&cname','&lno')
+new   1: insert into borrower10 values('ragu','1001')
+1 row created.
+
+SQL> /
+Enter value for cname: thasu
+Enter value for lno: 1002
+old   1: insert into borrower10 values('&cname','&lno')
+new   1: insert into borrower10 values('thasu','1002')
+1 row created.
+
+SQL> /
+Enter value for cname: luffy
+Enter value for lno: 1003
+old   1: insert into borrower10 values('&cname','&lno')
+new   1: insert into borrower10 values('luffy','1003')
+1 row created.
+
+
+SQL> /
+Enter value for cname: zoro
+Enter value for lno: 1004
+old   1: insert into borrower10 values('&cname','&lno')
+new   1: insert into borrower10 values('zoro','1004')
+1 row created.
+
+SQL> create table depositor10(cname varchar2(20),ano number(10));
+Table created.
+
+SQL> insert into depositor10 values('&cname','&ano');
+Enter value for cname: thasu
+Enter value for ano: 12345
+old   1: insert into depositor10 values('&cname','&ano')
+new   1: insert into depositor10 values('thasu','12345')
+1 row created.
+
+SQL> /
+Enter value for cname: shafu
+Enter value for ano: 12346
+old   1: insert into depositor10 values('&cname','&ano')
+new   1: insert into depositor10 values('shafu','12346')
+1 row created.
+
+SQL> /
+Enter value for cname: ragu
+Enter value for ano: 12347
+old   1: insert into depositor10 values('&cname','&ano')
+new   1: insert into depositor10 values('ragu','12347')
+1 row created.
+
+SQL> /
+Enter value for cname: priya
+Enter value for ano: 12348
+old   1: insert into depositor10 values('&cname','&ano')
+new   1: insert into depositor10 values('priya','12348')
+1 row created.
+
+SQL> select * from borrower10;
+
+CNAME			    LNO
+-------------------- ----------
+ragu			   1001
+thasu			   1002
+luffy			   1003
+zoro			   1004
+
+SQL> select * from depositor10;
+CNAME			    ANO
+-------------------- ----------
+thasu			  12345
+shafu			  12346
+ragu			  12347
+priya			  12348
+
+SQL> select distinct cname from borrower10 where cname in(select cname from depositor10);
+CNAME
+--------------------
+ragu
+thasu
+
+SQL> select distinct cname from borrower10 where cname not in(select cname from depositor10);
+
+CNAME
+--------------------
+zoro
+luffy
+
+SQL> create table branch10(bname varchar2(20),bcity varchar2(20),assets number(7));
+Table created.
+
+SQL> insert into branch10 values('&bname','&bcity','&assets');
+Enter value for bname: cantonment
+Enter value for bcity: trichy
+Enter value for assets: 50000
+old   1: insert into branch10 values('&bname','&bcity','&assets')
+new   1: insert into branch10 values('cantonment','trichy','50000')
+1 row created.
+
+SQL> /
+Enter value for bname: rockfort
+Enter value for bcity: madurai
+Enter value for assets: 40000
+old   1: insert into branch10 values('&bname','&bcity','&assets')
+new   1: insert into branch10 values('rockfort','madurai','40000')
+1 row created.
+
+SQL> /
+Enter value for bname: tnagar
+Enter value for bcity: chennai
+Enter value for assets: 30000
+old   1: insert into branch10 values('&bname','&bcity','&assets')
+new   1: insert into branch10 values('tnagar','chennai','30000')
+1 row created.
+
+SQL> /
+Enter value for bname: kknagar
+Enter value for bcity: salem
+Enter value for assets: 60000
+old   1: insert into branch10 values('&bname','&bcity','&assets')
+new   1: insert into branch10 values('kknagar','salem','60000')
+1 row created.
+
+SQL> /
+Enter value for bname: rockfort
+Enter value for bcity: trichy
+Enter value for assets: 70000
+old   1: insert into branch10 values('&bname','&bcity','&assets')
+new   1: insert into branch10 values('rockfort','trichy','70000')
+1 row created.
+
+SQL> select bname,assets from branch10 where assets>some(select assets from branch7 where bcity='madurai');
+
+BNAME			 ASSETS
+-------------------- ----------
+cantonment		  50000
+kknagar 		  60000
+rockfort		  70000
+
+SQL> SQL> select bname,assets from branch10 where assets>all(select assets from branch10 where bcity='maduari');
+
+BNAME			 ASSETS
+-------------------- ----------
+tnagar			  30000
+rockfort		             40000
+cantonment		             50000
+kknagar 		             60000
+rockfort		  70000
+
+SQL> select bname,avg_asset from(select bname,avg(assets) as avg_asset from branch10 group by bname) where avg_asset>40000;
+BNAME		      AVG_ASSET
+-------------------- ----------
+rockfort		  55000
+kknagar 		  60000
+cantonment		  50000
+
+SQL> select max(sum_asset)from(select bname,sum(assets)as sum_asset from branch10 group by bname);
+
+MAX(SUM_ASSET)
+--------------
+	110000
+
+SQL> commit;
+Commit complete.
+
+SQL> create table account10(ano number(10),bname varchar2(20),balance number(8));
+Table created.
+
+SQL> insert into account10 values('&ano','&bname','&balance');
+Enter value for ano: 12345
+Enter value for bname: cantonment
+Enter value for balance: 20000
+old   1: insert into account10 values('&ano','&bname','&balance')
+new   1: insert into account10 values('12345','cantonment','20000')
+1 row created.
+
+SQL> /
+Enter value for ano: 12346
+Enter value for bname: trichy
+Enter value for balance: 19000 
+old   1: insert into account10 values('&ano','&bname','&balance')
+new   1: insert into account10 values('12346','trichy','19000')
+1 row created.
+
+SQL> /
+Enter value for ano: 12347
+Enter value for bname: jknagar
+Enter value for balance: 17000 
+old   1: insert into account10 values('&ano','&bname','&balance')
+new   1: insert into account10 values('12347','jknagar','17000')
+1 row created.
+
+SQL> /
+Enter value for ano: 12348
+Enter value for bname: kknagar
+Enter value for balance: 15000 
+old   1: insert into account10 values('&ano','&bname','&balance')
+new   1: insert into account10 values('12348','kknagar','15000')
+1 row created.
+
+SQL> select * from account10;
+       ANO BNAME		   BALANCE
+---------- -------------------- ----------
+     12345 cantonment		     20000
+     12346 trichy		     19000
+     12347 jknagar		     17000
+     12348 kknagar		     15000
+
+SQL> create table branch11(bname varchar2(20),bcity varchar2(20),assets number(10));
+Table created.
+
+SQL> insert into branch11 values('&bname','&bcity','&assets');
+Enter value for bname: cantonment
+Enter value for bcity: trichy
+Enter value for assets: 50000
+old   1: insert into branch11 values('&bname','&bcity','&assets')
+new   1: insert into branch11 values('cantonment','trichy','50000')
+1 row created.
+
+SQL> /
+Enter value for bname: rockfort
+Enter value for bcity: madurai
+Enter value for assets: 40000
+old   1: insert into branch11 values('&bname','&bcity','&assets')
+new   1: insert into branch11 values('rockfort','madurai','40000')
+1 row created.
+
+SQL> /
+Enter value for bname: tnagar
+Enter value for bcity: chennai
+Enter value for assets: 30000
+old   1: insert into branch11 values('&bname','&bcity','&assets')
+new   1: insert into branch11 values('tnagar','chennai','30000')
+1 row created.
+
+SQL> /
+Enter value for bname: kknagar
+Enter value for bcity: salem
+Enter value for assets: 60000
+old   1: insert into branch11 values('&bname','&bcity','&assets')
+new   1: insert into branch11 values('kknagar','salem','60000')
+1 row created.
+
+SQL> /
+Enter value for bname: rockfort
+Enter value for bcity: trichy
+Enter value for assets: 70000
+old   1: insert into branch11 values('&bname','&bcity','&assets')
+new   1: insert into branch11 values('rockfort','trichy','70000')
+1 row created.
+SQL> delete from account10 where bname='cantonment';
+1 row deleted.
+SQL> select * from account10;
+       ANO BNAME		   BALANCE
+---------- -------------------- ----------
+     12346 trichy		     19000
+     12347 jknagar		     17000
+     12348 kknagar		     15000
+SQL> delete from account10 where bname in(select bname from branch10 where bcity='salem');
+1 row deleted.
+SQL> select * from account10;
+       ANO BNAME		   BALANCE
+---------- -------------------- ----------
+     12346 trichy		     19000
+     12347 jknagar		     17000
+SQL> delete from account10 where balance<(select avg(balance)from account10);
+1 row deleted.
+SQL> select * from account10;
+       ANO BNAME		   BALANCE
+---------- -------------------- ----------
+     12346 trichy		     19000
+
+SQL> commit;
+Commit complete.
+EX NO:02                                       
