@@ -1,0 +1,155 @@
+SQL> create table syed2(name varchar2(10),regno number(5));
+Table created.
+
+SQL> insert into syed2 values('&name','&regno');
+Enter value for name: thameem
+Enter value for regno: 101
+old   1: insert into syed2 values('&name','&regno')
+new   1: insert into syed2 values('thameem','101')
+1 row created.
+
+SQL> /
+Enter value for name: yasar
+Enter value for regno: 102
+old   1: insert into syed2 values('&name','&regno')
+new   1: insert into syed2 values('yasar','102')
+1 row created.
+
+SQL> /
+Enter value for name: ansari
+Enter value for regno: 103
+old   1: insert into syed2 values('&name','&regno')
+new   1: insert into syed2 values('ansari','103')
+1 row created.
+
+SQL> /
+Enter value for name: shameer
+Enter value for regno: 104
+old   1: insert into syed2 values('&name','&regno')
+new   1: insert into syed2 values('shameer','104')
+1 row created.
+
+SQL> /
+Enter value for name: pughal
+Enter value for regno: 105
+old   1: insert into syed2 values('&name','&regno')
+new   1: insert into syed2 values('pughal','105')
+1 row created.
+
+SQL> /
+Enter value for name: safath
+Enter value for regno: 106
+old   1: insert into syed2 values('&name','&regno')
+new   1: insert into syed2 values('safath','106')
+1 row created.
+
+SQL> select * from syed2;
+NAME		REGNO
+---------- ----------
+thameem 	  101
+yasar		  102
+ansari		  103
+shameer 	  104
+pughal		  105
+safath		  106
+6 rows selected.
+
+SQL> create table ahamed2(regno number(7),total number(8));
+Table created.
+
+SQL> insert into ahamed2 values('&regno','&total');
+Enter value for regno: 101
+Enter value for total: 500
+old   1: insert into ahamed2 values('&regno','&total')
+new   1: insert into ahamed2 values('101','500')
+1 row created.
+
+SQL> /
+Enter value for regno: 102
+Enter value for total: 485
+old   1: insert into ahamed2 values('&regno','&total')
+new   1: insert into ahamed2 values('102','485')
+1 row created.
+
+SQL> /
+Enter value for regno: 103
+Enter value for total: 455
+old   1: insert into ahamed2 values('&regno','&total')
+new   1: insert into ahamed2 values('103','455')
+1 row created.
+
+SQL> /
+Enter value for regno: 104
+Enter value for total: 355
+old   1: insert into ahamed2 values('&regno','&total')
+new   1: insert into ahamed2 values('104','355')
+1 row created.
+
+SQL> /
+Enter value for regno: 105
+Enter value for total: 488
+old   1: insert into ahamed2 values('&regno','&total')
+new   1: insert into ahamed2 values('105','488')
+1 row created.
+
+SQL> /
+Enter value for regno: 106
+Enter value for total: 366
+old   1: insert into ahamed2 values('&regno','&total')
+new   1: insert into ahamed2 values('106','366')
+1 row created.
+
+SQL> /
+Enter value for regno: 107
+Enter value for total: 460
+old   1: insert into ahamed2 values('&regno','&total')
+new   1: insert into ahamed2 values('107','460')
+1 row created.
+
+SQL> select * from ahamed2;
+
+     REGNO	TOTAL
+---------- ----------
+       101	  500
+       102	  485
+       103	  455
+       104	  355
+       105	  488
+       106	  366
+       107	  460
+7 rows selected.
+
+SQL> select * from syed2 join ahamed2 on syed2.regno=ahamed2.regno;
+NAME		REGNO	   REGNO      TOTAL
+---------- ---------- ---------- ----------
+thameem 	  101	     101	500
+yasar		  102	     102	485
+ansari		  103	     103	455
+shameer 	  104	     104	355
+pughal		  105	     105	488
+safath		  106	     106	366
+6 rows selected.
+SQL> select * from syed2 left join ahamed2 on syed2.regno=ahamed2.regno;
+NAME		REGNO	   REGNO      TOTAL
+---------- ---------- ---------- ----------
+thameem 	  101	     101	500
+yasar		  102	     102	485
+ansari		  103	     103	455
+shameer 	  104	     104	355
+pughal		  105	     105	488
+safath		  106	     106	366
+6 rows selected.
+SQL> select * from syed2 right join ahamed2 on syed2.regno=ahamed2.regno;
+NAME		REGNO	   REGNO      TOTAL
+---------- ---------- ---------- ----------
+thameem 	  101	     101	500
+yasar		  102	     102	485
+ansari		  103	     103	455
+shameer 	  104	     104	355
+pughal		  105	     105	488
+safath		  106	     106	366
+			     107	460
+7 rows selected.
+SQL> commit;
+Commit complete.
+
