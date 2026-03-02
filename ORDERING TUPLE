@@ -1,0 +1,63 @@
+SQL> create table customer6(cid number(5),cname varchar2(20),address varchar2(20));
+
+Table created.
+
+SQL> insert into customer6 values('&cid','&cname','&address');    
+Enter value for cid: 101
+Enter value for cname: robin
+Enter value for address: japan
+old   1: insert into customer6 values('&cid','&cname','&address')
+new   1: insert into customer6 values('101','robin','japan')
+1 row created.
+
+SQL> /
+Enter value for cid: 102
+Enter value for cname: nami
+Enter value for address: skyland
+old   1: insert into customer6 values('&cid','&cname','&address')
+new   1: insert into customer6 values('102','nami','skyland')
+1 row created.
+
+SQL> /
+Enter value for cid: 103 
+Enter value for cname: vivi
+Enter value for address: dessert
+old   1: insert into customer6 values('&cid','&cname','&address')
+new   1: insert into customer6 values('103','vivi','dessert')
+1 row created.
+
+SQL> /
+Enter value for cid: 104
+Enter value for cname: ragu
+Enter value for address: trichy
+old   1: insert into customer6 values('&cid','&cname','&address')
+new   1: insert into customer6 values('104','ragu','trichy')
+1 row created.
+
+SQL> select * from customer6;
+       CID CNAME		ADDRESS
+---------- -------------------- --------------------
+       101 robin		japan
+       102 nami 		skyland
+       103 vivi 		dessert
+       104 ragu 		Trichy
+
+SQL> select cname from customer6 order by cname asc;
+CNAME
+--------------------
+nami
+ragu
+robin
+vivi
+SQL> select cname from customer6 order by cname desc;
+
+CNAME
+--------------------
+vivi
+robin
+ragu
+nami
+
+SQL> commit;
+
+Commit complete.
