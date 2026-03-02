@@ -1,0 +1,121 @@
+SQL> create table countries2(cid number(5),cname varchar2(25),ccode varchar2(25),primary key(cid));
+Table created.
+SQL> insert into countries2 values(&cid,'&cname','&ccode');
+Enter value for cid: 1
+Enter value for cname: united states
+Enter value for ccode: 25
+old   1: insert into countries2 values(&cid,'&cname','&ccode')
+new   1: insert into countries2 values(1,'united states','25')
+1 row created.
+SQL> /
+Enter value for cid: 2
+Enter value for cname: united kingdom
+Enter value for ccode: 26
+old   1: insert into countries2 values(&cid,'&cname','&ccode')
+new   1: insert into countries2 values(2,'united kingdom','26')
+1 row created.
+SQL> select * from countries2;
+       CID CNAME		     CCODE
+---------- ------------------------- -------------------------
+	 1 united states	     25
+	 2 united kingdom	     26
+SQL> create table states2(sid number(5),sname varchar2(25),scode varchar2(25),primary key(sid));
+Table created.
+SQL> insert into states2 values(&cid,'&sname','&scode');
+Enter value for cid: 1
+Enter value for sname: texas
+Enter value for scode: 20
+old   1: insert into states2 values(&cid,'&sname','&scode')
+new   1: insert into states2 values(1,'texas','20')
+1 row created.
+SQL> /
+Enter value for cid: 2
+Enter value for sname: arizona
+Enter value for scode: 21
+old   1: insert into states2 values(&cid,'&sname','&scode')
+new   1: insert into states2 values(2,'arizona','21')
+1 row created.
+SQL> select * from states2;
+       SID SNAME		     SCODE
+---------- ------------------------- -------------------------
+	 1 texas		     20
+	 2 arizona		     21
+SQL> alter table states2 add cid number(5);
+Table altered.
+SQL> select * from statesTA2;
+       SID SNAME		     SCODE			      CID
+---------- ------------------------- ------------------------- ----------
+	 1 texas		     20
+	 2 arizona		     21
+SQL> update states2 set cid=1 where sid=1;
+1 row updated.
+SQL> update states2 set cid=1 where sid=2;
+1 row updated.
+SQL> select * from states2;
+       SID SNAME		     SCODE			      CID
+---------- ------------------------- ------------------------- ----------
+	 1 texas		     20 				1
+	 2 arizona		     21 				1
+SQL> select * from countries2;
+       CID CNAME		     CCODE
+---------- ------------------------- -------------------------
+	 1 united states	     25
+	 2 united kingdom	     26
+SQL> alter table states2 add constraint fk_states2_countries2_id foreign key(cid) references countries2(cid) on delete cascade;
+Table altered.
+SQL> delete from countries2 where cid=1;
+1 row deleted.
+SQL> select * from states2;
+no rows selected
+SQL> select * from countries2;
+       CID CNAME		     CCODE
+---------- ------------------------- -------------------------
+	 2 united kingdom	     26
+SQL> commit;
+Commit complete.
+EX NO:01                                         1.3 ALTER TABLE
+SQL> create table jamal(cname varchar2(10),ano number(20));
+Table created.
+SQL> insert into jamal values('&cname','&ano');
+Enter value for cname: ahamed
+Enter value for ano: 308
+old   1: insert into jamal values('&cname','&ano')
+new   1: insert into jamal values('ahamed','308')
+1 row created.
+SQL> select * from jamal;
+CNAME		  ANO
+---------- ----------
+ahamed		  308
+SQL> alter table jamal add city varchar(20);
+Table altered.
+SQL> desc jamal;
+ Name					   Null?    Type
+ ----------------------------------------- -------- ----------------------------
+ CNAME						    VARCHAR2(10)
+ ANO						    NUMBER(20)
+ CITY						    VARCHAR2(20)
+SQL> alter table jamal modify ano number(20);
+Table altered.
+SQL> desc jamal;
+ Name					   Null?    Type
+ ----------------------------------------- -------- ----------------------------
+ CNAME						    VARCHAR2(10)
+ ANO						    NUMBER(20)
+ CITY						    VARCHAR2(20)
+SQL> alter table jamal rename column ano to regno;
+Table altered.
+SQL> desc jamal;
+ Name					   Null?    Type
+ ----------------------------------------- -------- ----------------------------
+ CNAME						    VARCHAR2(10)
+ REGNO						    NUMBER(20)
+ CITY						    VARCHAR2(20)
+SQL> alter table jamal drop column city;
+Table altered.
+SQL> select * from jamal;
+CNAME		REGNO
+---------- ----------
+ahamed		  308
+
+SQL> commit;
+Commit complete.
