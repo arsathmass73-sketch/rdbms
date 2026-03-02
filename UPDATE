@@ -1,0 +1,49 @@
+SQL> create table act2(ano number(10),bname varchar2(20),amount number(10));
+Table created.
+
+SQL> insert into act2 values('&ano','&bname','&amount');
+Enter value for ano: 1003
+Enter value for bname: kknagar
+Enter value for amount: 4003
+old   1: insert into act2 values('&ano','&bname','&amount')
+new   1: insert into act2 values('1003','kknagar','4003'
+1 row created.
+
+SQL> /
+Enter value for ano: 1004
+Enter value for bname: jknagar
+Enter value for amount: 4004
+old   1: insert into act2 values('&ano','&bname','&amount')
+new   1: insert into act2 values('1004','jknagar','4004')
+1 row created.
+
+SQL> select * from act2;
+       ANO BNAME		    AMOUNT
+---------- -------------------- ----------
+      1003 kknagar		      4003
+      1004 jknagar		      4004
+
+SQL> update act2 set amount=amount*1.1;
+2 rows updated.
+
+SQL> select * from act2;
+       ANO BNAME		    AMOUNT
+---------- -------------------- ----------
+      1003 kknagar		      4403
+      1004 jknagar		      4404
+
+SQL> update act2 set amount=amount*5;
+2 rows updated.
+
+SQL> select * from act2;
+       ANO BNAME		    AMOUNT
+---------- -------------------- ----------
+      1003 kknagar		     22015
+      1004 jknagar		     22020
+SQL> update act2 set amount=case when amount<=10000 then amount*1.05 else amount*5 end;
+2 rows updated.
+SQL> select * from act2;
+       ANO BNAME		    AMOUNT
+---------- -------------------- ----------
+      1003 kknagar		    110075
+      1004 jknagar		    110100
