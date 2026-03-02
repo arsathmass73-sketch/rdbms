@@ -1,0 +1,22 @@
+SQL> set serveroutput on;
+SQL> declare
+  2  str1 varchar2(25):='dstr';
+  3  str2 varchar2(25);
+  4  len number;
+  5  i number;
+  6  begin
+  7  len:=length(str1);
+  8  for i in reverse 1..len
+  9  loop
+ 10  str2:=str2||substr(str1,i,1);
+ 11  end loop;
+ 12  dbms_output.put_line('Reverse of string is:'||str2);
+ 13  end;
+ 14  /
+Reverse of string is:rtsd
+
+PL/SQL procedure successfully completed.
+
+SQL> commit;
+
+Commit complete.
