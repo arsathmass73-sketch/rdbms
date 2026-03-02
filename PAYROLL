@@ -1,0 +1,113 @@
+SQL> create table payroll2(eno number(4),ename varchar2(10),bpay number(7),hra number(6),
+  2  da number(6),pf number(6),gpay number(7),npay number(7));
+Table created.
+
+SQL> insert into payroll2 values(&eno,'&ename',&bpay,&hra,&da,&pf,&gpay,&npay);
+Enter value for eno: 101
+Enter value for ename: Syed
+Enter value for bpay: 85000
+Enter value for hra: 0
+Enter value for da: 0
+Enter value for pf: 0
+Enter value for gpay: 0
+Enter value for npay: 0
+old   1: insert into payroll2 values(&eno,'&ename',&bpay,&hra,&da,&pf,&gpay,&npay)
+new   1: insert into payroll2 values(101,'Syed',85000,0,0,0,0,0)
+1 row created.
+
+SQL> /
+Enter value for eno: 102
+Enter value for ename: Ahamed
+Enter value for bpay: 70000
+Enter value for hra: 0
+Enter value for da: 0
+Enter value for pf: 0
+Enter value for gpay: 0
+Enter value for npay: 0
+old   1: insert into payroll2 values(&eno,'&ename',&bpay,&hra,&da,&pf,&gpay,&npay)
+new   1: insert into payroll2 values(102,'Ahamed',70000,0,0,0,0,0)
+1 row created.
+
+SQL> /
+Enter value for eno: 103
+Enter value for ename: Ziya
+Enter value for bpay: 90000
+Enter value for hra: 0
+Enter value for da: 0
+Enter value for pf: 0
+Enter value for gpay: 0
+Enter value for npay: 0
+old   1: insert into payroll2 values(&eno,'&ename',&bpay,&hra,&da,&pf,&gpay,&npay)
+new   1: insert into payroll2 values(103,'Ziya',90000,0,0,0,0,0)
+1 row created.
+
+SQL> /
+Enter value for eno: 104
+Enter value for ename: Riyas
+Enter value for bpay: 80000
+Enter value for hra: 0
+Enter value for da: 0
+Enter value for pf: 0
+Enter value for gpay: 0
+Enter value for npay: 0
+old   1: insert into payroll2 values(&eno,'&ename',&bpay,&hra,&da,&pf,&gpay,&npay)
+new   1: insert into payroll2 values(104,'Riyas',80000,0,0,0,0,0)
+1 row created.
+
+SQL> select 8 from payroll2;
+	 8
+----------
+	 8
+	 8
+	 8
+	 8
+
+SQL> set serveroutput on;
+SQL> declare
+  2  cursor a is select * from payroll2;
+  3  x payroll2%rowtype;
+  4  begin
+  5  open a;
+  6  loop
+  7  fetch a into x;
+  8  exit when a%notfound;
+  9  x.hra:=x.bpay*0.5;
+ 10  x.pf:=x.bpay*0.12;
+ 11  x.da:=x.bpay*0.15;
+ 12  x.gpay:=x.bpay+x.hra+x.da;
+ 13  x.npay:=x.gpay-x.pf;
+ 14  update payroll2 set hra=x.hra,da=x.da,pf=x.pf,gpay=x.gpay,npay=x.npay where eno=x.eno;
+ 15  end loop;
+ 16  close a;
+ 17  end;
+ 18  /
+
+PL/SQL procedure successfully completed.
+
+SQL> select * from payroll2;
+
+       ENO ENAME	    BPAY	HRA	    DA	       PF	GPAY
+---------- ---------- ---------- ---------- ---------- ---------- ----------
+      NPAY
+----------
+       101 Syed 	   85000      42500	 12750	    10200     140250
+    130050
+
+       102 Ahamed	   70000      35000	 10500	     8400     115500
+    107100
+
+       103 Ziya 	   90000      45000	 13500	    10800     148500
+    137700
+
+
+       ENO ENAME	    BPAY	HRA	    DA	       PF	GPAY
+---------- ---------- ---------- ---------- ---------- ---------- ----------
+      NPAY
+
+       104 Riyas	   80000      40000	 12000	     9600     132000
+    122400
+
+
+SQL> commit;
+
+Commit complete.
