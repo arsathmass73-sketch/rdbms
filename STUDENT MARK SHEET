@@ -1,0 +1,74 @@
+SQL> create table student10(rollno number(10),name varchar2(20),mark1 number(10),mark2 number(10),total number(10),average number(10));
+Table created.
+
+SQL> insert into student10 values(&rollno,'&name',&mark1,&mark2,'','');
+Enter value for rollno: 40
+Enter value for name: syed
+Enter value for mark1: 90
+Enter value for mark2: 98
+old   1: insert into student10 values(&rollno,'&name',&mark1,&mark2,'','')
+new   1: insert into student10 values(40,'syed',90,98,'','')
+1 row created.
+
+SQL> /
+Enter value for rollno: 39
+Enter value for name: marzuq
+Enter value for mark1: 76
+Enter value for mark2: 78
+old   1: insert into student10 values(&rollno,'&name',&mark1,&mark2,'','')
+new   1: insert into student10 values(39,'marzuq',76,78,'','')
+1 row created.
+
+SQL> /
+Enter value for rollno: 31
+Enter value for name: kadhar
+Enter value for mark1: 90
+Enter value for mark2: 95
+old   1: insert into student10 values(&rollno,'&name',&mark1,&mark2,'','')
+new   1: insert into student10 values(31,'kadhar',90,95,'','')
+1 row created.
+
+SQL> /
+Enter value for rollno: 38
+Enter value for name: mohamed
+Enter value for mark1: 86
+Enter value for mark2: 99
+old   1: insert into student10 values(&rollno,'&name',&mark1,&mark2,'','')
+new   1: insert into student10 values(38,'mohamed',86,99,'','')
+1 row created.
+
+SQL> /
+Enter value for rollno: 26
+Enter value for name: Aahil
+Enter value for mark1: 70
+Enter value for mark2: 70
+old   1: insert into student10 values(&rollno,'&name',&mark1,&mark2,'','')
+new   1: insert into student10 values(26,'Aahil',70,70,'','')
+1 row created.
+
+SQL> select * from student10;
+    ROLLNO NAME 		     MARK1	MARK2	   TOTAL    AVERAGE
+---------- -------------------- ---------- ---------- ---------- ----------
+	40 syed 			90	   98
+	39 marzuq			76	   78
+	31 kadhar			90	   95
+	38 mohamed			86	   99
+	26 Aahil			70	   70
+
+SQL> set serveroutput on;
+SQL> declare
+  2  cursor c1 is select * from student10;
+  3  x student10%rowtype;
+  4  begin
+  5  open c1;
+  6  loop
+  7  fetch c1 into x;
+  8  exit when c1%notfound;
+  9  x.total:=x.mark1+x.mark2;
+ 10  x.average:=x.total/2;
+ 11  update student10 set total=x.total,average=x.average where rollno=x.rollno;
+ 12  update student10 set total=x.total,average=x.average where rollno=x.rollno;
+ 13  end loop;
+ 14  close c1;
+ 15  end;
+ 16  /
